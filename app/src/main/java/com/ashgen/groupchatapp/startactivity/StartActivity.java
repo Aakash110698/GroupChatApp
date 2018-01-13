@@ -6,10 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.ashgen.groupchatapp.R;
 import com.ashgen.groupchatapp.chatactivity.ChatActivity;
+import com.ashgen.groupchatapp.root.App;
+import com.ashgen.groupchatapp.root.UserDetails;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +26,8 @@ public class StartActivity extends AppCompatActivity implements StartActivityMVP
     Button buttonGetstarted;
     @BindView(R.id.textinputlayout_username)
     TextInputLayout textinputlayoutUsername;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
     StartActivityPresenter presenter;
 
@@ -41,15 +48,31 @@ public class StartActivity extends AppCompatActivity implements StartActivityMVP
 
     @Override
     public void initializeChat(String username) {
+
+
+        App.setUserObject(new UserDetails(username,System.currentTimeMillis()+"","RED"));
         Intent intent = new Intent(StartActivity.this,ChatActivity.class);
         intent.putExtra("username",username);
         startActivity(intent);
     }
 
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
     @OnClick(R.id.button_getstarted)
     public void onViewClicked() {
+
         presenter.getStartedButtonClick();
     }
+
 
     @Override
     protected void onResume() {

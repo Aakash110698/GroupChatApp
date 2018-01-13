@@ -9,6 +9,8 @@ public interface StartActivityMVP {
      interface View{
          String getUsername();
          void initializeChat(String username);
+         void showProgressBar();
+         void hideProgressBar();
     }
     interface Presenter{
          void setView(StartActivityMVP.View view);

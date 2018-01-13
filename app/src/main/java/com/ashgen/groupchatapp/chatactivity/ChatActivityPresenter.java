@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ashgen.groupchatapp.root.App;
 import com.ashgen.groupchatapp.root.Constants;
+import com.ashgen.groupchatapp.root.UserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -14,7 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -34,6 +38,7 @@ public class ChatActivityPresenter implements ChatActivityMVP.Presenter {
 
     @Override
     public void loadData() {
+        view.setAdapter(new ArrayList<Message>());
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -45,7 +50,7 @@ public class ChatActivityPresenter implements ChatActivityMVP.Presenter {
                     userModels.add(userSnapshot.getValue(Message.class));
                 }
 
-                view.setAdapter(userModels);
+                view.notifyData(userModels);
             }
 
             @Override
@@ -61,12 +66,15 @@ public class ChatActivityPresenter implements ChatActivityMVP.Presenter {
         {
             if (!TextUtils.isEmpty(view.getMessage()))
             {
+                UserDetails userDetails = App.getUserObject();
                 Message message = new Message();
-                message.setColor("BLACK");
-                message.setName("Malavan");
+                message.setColor(userDetails.getColor());
+                message.setName(userDetails.getName());
                 message.setText(view.getMessage());
-                message.setTime("21:00");
-                message.setUniqueid("Malavan");
+                String timeStamp = new SimpleDateFormat("HHmm").format(Calendar.getInstance().getTime());
+                message.setTime(timeStamp);
+                message.setUniqueid(userDetails.getUniqueID());
+                message.setType(Constants.NORMAL_MESSAGE);
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("chat");
                 String pushkey = databaseReference.push().getKey();
                 message.setKey(pushkey);
@@ -91,16 +99,17 @@ public class ChatActivityPresenter implements ChatActivityMVP.Presenter {
         Query query;
 
         if (nodeId == null)
-            query = FirebaseDatabase.getInstance().getReference()
-                    .child(Constants.FIREBASE_DATABASE_LOCATION_USERS)
+            query = FirebaseDatabase.getInstance().getReference().child("chat")
                     .orderByKey()
-                    .limitToFirst(mPostsPerPage);
+                    .limitToFirst(10);
         else
             query = FirebaseDatabase.getInstance().getReference()
-                    .child(Constants.FIREBASE_DATABASE_LOCATION_USERS)
+                    .child("chat")
                     .orderByKey()
                     .startAt(nodeId)
-                    .limitToFirst(mPostsPerPage);
+                    .limitToFirst(10);
+
+        Log.d("ss", "getMessages: "+query.toString());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

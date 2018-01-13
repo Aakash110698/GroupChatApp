@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -31,34 +34,24 @@ public class ChatActivity extends AppCompatActivity implements ChatActivityMVP.V
     private int mLastVisibleItemPosition;
     private boolean mIsLoading = false;
     private int mPostsPerPage =20;
+     LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
-        final LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getApplicationContext());
+         linearLayoutManager =new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+
         recyclerviewChat.setLayoutManager(linearLayoutManager);
-        recyclerviewChat.setHasFixedSize(false);
+
         presenter = new ChatActivityPresenter();
 
+
         messageAdapter = new MessageAdapter(new ArrayList<Message>(),getIntent().getStringExtra("username"));
-        recyclerviewChat.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
 
-                mTotalItemCount = linearLayoutManager.getItemCount();
-                mLastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-
-                if (!mIsLoading && mTotalItemCount <= (mLastVisibleItemPosition
-                        + mPostsPerPage)) {
-                    presenter.getMessages(messageAdapter.getLastItemId());
-                    mIsLoading = true;
-                }
-            }
-        });
 
 
 
@@ -67,6 +60,7 @@ public class ChatActivity extends AppCompatActivity implements ChatActivityMVP.V
     @OnClick(R.id.imgbutton_send)
     public void onViewClicked() {
         presenter.sendButtonClicked();
+
 
     }
 
@@ -79,13 +73,15 @@ public class ChatActivity extends AppCompatActivity implements ChatActivityMVP.V
     @Override
     public void notifyData(List<Message> messages) {
         messageAdapter.addAll(messages);
+        linearLayoutManager.scrollToPosition(messageAdapter.messageList.size()-1);
+
 
 
     }
 
     @Override
     public String getMessage() {
-        return edittextMessage.getText().toString();
+        return edittextMessage.getText().toString().trim();
     }
 
     @Override

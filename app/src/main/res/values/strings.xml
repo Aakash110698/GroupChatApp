@@ -4,4 +4,7 @@
     <string name="get_started">Get Started</string>
     <string name="groupchat">GroupChat</string>
     <string name="enter_message">Enter message</string>
+    <string name="sample_name">Malavan</string>
+    <string name="sample_status">Joined</string>
+    <string name="sample_time">11:15 PM</string>
 </resources>

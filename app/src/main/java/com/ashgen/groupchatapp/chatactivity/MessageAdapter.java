@@ -1,22 +1,30 @@
 package com.ashgen.groupchatapp.chatactivity;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ashgen.groupchatapp.R;
+import com.ashgen.groupchatapp.root.App;
 import com.ashgen.groupchatapp.root.Constants;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private List<Message> messageList = new ArrayList<>();
+    public List<Message> messageList = new ArrayList<>();
     private String uniqueID;
 
     public MessageAdapter(List<Message> messageList,String uniqueID) {
@@ -51,7 +59,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        switch (holder.getItemViewType())
+        {
+            case 0: ((MessageViewHolderAlert)holder).setMessage(messageList.get(position));
+                    break;
+            case 1: ((MessageViewHolderMine)holder).setMessage(messageList.get(position));
+                    break;
+            case 2: ((MessageViewHolderOthers)holder).setMessage(messageList.get(position));
+                    break;
+        }
     }
 
 
@@ -65,7 +81,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
        {
            return 0;
        }
-       else if (type.equals(Constants.NORMAL_MESSAGE) && type.equals(uniqueid))
+       else if (type.equals(Constants.NORMAL_MESSAGE) && uniqueid.equals(App.getUserObject().getUniqueID()))
        {
            return 1;
        }
@@ -87,9 +103,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void addAll(List<Message> messageList)
     {
-        int initialSize = this.messageList.size();
-        this.messageList.addAll(messageList);
-        notifyItemRangeInserted(initialSize, messageList.size());
+        this.messageList = messageList;
+        notifyDataSetChanged();
+
     }
 
 
@@ -98,22 +114,64 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
     public class MessageViewHolderMine extends RecyclerView.ViewHolder{
 
+
+
+        @BindView(R.id.textview_message_mine)
+        TextView textView_message_mine;
+
+
         public MessageViewHolderMine(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
+        }
+
+        public void setMessage(Message message) {
+
+            textView_message_mine.setText(message.getText());
+
+
         }
     }
 
     public class MessageViewHolderOthers extends RecyclerView.ViewHolder{
 
+        @BindView(R.id.textview_message)
+        TextView textView_message;
+
         public MessageViewHolderOthers(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
         }
+        public void setMessage(Message message)
+        {
+          String text = message.getText();
+          String name = message.getName();
+
+           Spanned te
+                   =  Html.fromHtml("<p>"+text+"</p>");
+            textView_message.setText(text);
+
+        }
+
     }
 
     public class MessageViewHolderAlert extends RecyclerView.ViewHolder{
 
+        @BindView(R.id.textView_status)
+        TextView textView_status;
+        @BindView(R.id.textView_username)
+        TextView textView_username;
+
+
         public MessageViewHolderAlert(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
+
+        }
+        public void setMessage(Message message)
+        {
+            textView_status.setText(message.getText());
+            textView_username.setText(message.getName());
         }
     }
 

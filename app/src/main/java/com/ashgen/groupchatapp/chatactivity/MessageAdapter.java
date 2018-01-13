@@ -85,6 +85,17 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return messageList.size();
     }
 
+    public void addAll(List<Message> messageList)
+    {
+        int initialSize = this.messageList.size();
+        this.messageList.addAll(messageList);
+        notifyItemRangeInserted(initialSize, messageList.size());
+    }
+
+
+    public String getLastItemId() {
+        return messageList.get(messageList.size() - 1).getKey();
+    }
     public class MessageViewHolderMine extends RecyclerView.ViewHolder{
 
         public MessageViewHolderMine(View itemView) {

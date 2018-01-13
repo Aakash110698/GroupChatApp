@@ -11,14 +11,26 @@ public class Message {
     String time;
     String type;
     String uniqueid;
+    String key;
 
-    public Message(String name, String text, String color, String time, String type, String uniqueid) {
+
+    public Message(String name, String text, String color, String time, String type, String uniqueid, String key) {
         this.name = name;
         this.text = text;
         this.color = color;
         this.time = time;
         this.type = type;
         this.uniqueid = uniqueid;
+        this.key = key;
+    }
+
+    public String getKey() {
+
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public Message() {

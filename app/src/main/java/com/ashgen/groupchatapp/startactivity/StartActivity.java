@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.widget.Button;
 
 import com.ashgen.groupchatapp.R;
+import com.ashgen.groupchatapp.chatactivity.ChatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +41,7 @@ public class StartActivity extends AppCompatActivity implements StartActivityMVP
 
     @Override
     public void initializeChat(String username) {
-        Intent intent = new Intent(StartActivity.this,StartActivity.class);
+        Intent intent = new Intent(StartActivity.this,ChatActivity.class);
         intent.putExtra("username",username);
         startActivity(intent);
     }

@@ -3,4 +3,5 @@
     <string name="user_name">User name</string>
     <string name="get_started">Get Started</string>
     <string name="groupchat">GroupChat</string>
+    <string name="enter_message">Enter message</string>
 </resources>

@@ -1,3 +1,4 @@
 # GroupChatApp
 Firebase app
-![alt text](https://github.com/malavancs/GroupChatApp/blob/master/app/ScreenShots/Screenshot_20180114-134446.png)
+![alt text](https://github.com/malavancs/GroupChatApp/blob/master/Resized-6Z6CN.png) 
+![alt text](https://github.com/malavancs/GroupChatApp/blob/master/Resized-EE44F.png)

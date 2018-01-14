@@ -37,5 +37,5 @@
         android:layout_toEndOf="@+id/textView_username"
         android:text="@string/is"
         android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:textSize="18sp" />
 </RelativeLayout>

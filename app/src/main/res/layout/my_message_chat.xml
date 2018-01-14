@@ -3,32 +3,31 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="3dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/imageViewColor"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
             android:src="@drawable/default_avata" />
 
-        <TextView
-            android:id="@+id/textview_message_mine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_corner1"
-            android:padding="10dp"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@id/imageView2"
-            android:layout_marginEnd="5dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginStart="20dp"
-            android:text="a"
-            android:textColor="#ffffff" />
+    <TextView
+        android:id="@+id/textview_message_mine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@id/imageViewColor"
+        android:background="@drawable/rounded_corner1"
+        android:padding="10dp"
+        android:text="a"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
 
     </RelativeLayout>
 

@@ -7,4 +7,9 @@
     <string name="sample_name">Malavan</string>
     <string name="sample_status">Joined</string>
     <string name="sample_time">11:15 PM</string>
+    <string name="end_session">End Session</string>
+    <string name="end_your_session">End your session</string>
+    <string name="default_notification_channel_id">32</string>
+    <string name="topic">group_chat</string>
+    <string name="is">is</string>
 </resources>

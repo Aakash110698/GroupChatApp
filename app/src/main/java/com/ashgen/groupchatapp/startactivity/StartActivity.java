@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import com.ashgen.groupchatapp.R;
 import com.ashgen.groupchatapp.chatactivity.ChatActivity;
 import com.ashgen.groupchatapp.root.App;
+import com.ashgen.groupchatapp.root.SharedPreferenceHelper;
 import com.ashgen.groupchatapp.root.UserDetails;
 
 import butterknife.BindView;
@@ -36,7 +37,16 @@ public class StartActivity extends AppCompatActivity implements StartActivityMVP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
+
+        if (new SharedPreferenceHelper(this).isUserLoggedIn())
+        {
+            initializeChat(new SharedPreferenceHelper(this).getUserDetails().getName());
+        }
+
         presenter = new StartActivityPresenter();
+
+
+
 
 
     }
@@ -50,10 +60,17 @@ public class StartActivity extends AppCompatActivity implements StartActivityMVP
     public void initializeChat(String username) {
 
 
-        App.setUserObject(new UserDetails(username,System.currentTimeMillis()+"","RED"));
+
         Intent intent = new Intent(StartActivity.this,ChatActivity.class);
         intent.putExtra("username",username);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void CreateUser(UserDetails userDetails) {
+        SharedPreferenceHelper sharedPreferenceHelper = new SharedPreferenceHelper(StartActivity.this);
+        sharedPreferenceHelper.putUserDetails(userDetails);
     }
 
     @Override

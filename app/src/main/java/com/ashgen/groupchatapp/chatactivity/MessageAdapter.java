@@ -1,5 +1,8 @@
 package com.ashgen.groupchatapp.chatactivity;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import com.ashgen.groupchatapp.R;
 import com.ashgen.groupchatapp.root.App;
 import com.ashgen.groupchatapp.root.Constants;
+import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Text;
 
@@ -19,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -118,6 +123,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.textview_message_mine)
         TextView textView_message_mine;
+        @BindView(R.id.imageViewColor)
+        CircleImageView imageView;
 
 
         public MessageViewHolderMine(View itemView) {
@@ -128,6 +135,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void setMessage(Message message) {
 
             textView_message_mine.setText(message.getText());
+            imageView.setColorFilter(getColorFromString(message.getColor()));
 
 
         }
@@ -137,6 +145,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.textview_message)
         TextView textView_message;
+        @BindView(R.id.imageViewColor)
+        CircleImageView imageView;
 
         public MessageViewHolderOthers(View itemView) {
             super(itemView);
@@ -148,8 +158,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
           String name = message.getName();
 
            Spanned te
-                   =  Html.fromHtml("<p>"+text+"</p>");
-            textView_message.setText(text);
+                   =  Html.fromHtml("<b>"+name+"</b>"+"<br>"+text);
+           textView_message.setText(te);
+        imageView.setColorFilter(getColorFromString(message.getColor()));
 
         }
 
@@ -172,6 +183,21 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         {
             textView_status.setText(message.getText());
             textView_username.setText(message.getName());
+        }
+    }
+
+
+    public int getColorFromString(String color)
+    {
+        switch (color)
+        {
+            case "RED"  : return Color.RED;
+            case "GREEN": return Color.GREEN;
+            case "BLUE" : return Color.BLUE;
+            case "CYAN": return Color.CYAN;
+            case "GRAY" : return Color.GRAY;
+            default:    return Color.RED;
+
         }
     }
 

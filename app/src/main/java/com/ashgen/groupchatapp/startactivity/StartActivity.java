@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ashgen.groupchatapp.R;
 import com.ashgen.groupchatapp.chatactivity.ChatActivity;
@@ -82,6 +83,11 @@ public class StartActivity extends AppCompatActivity implements StartActivityMVP
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.button_getstarted)

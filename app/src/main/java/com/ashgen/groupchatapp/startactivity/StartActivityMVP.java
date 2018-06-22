@@ -14,7 +14,9 @@ public interface StartActivityMVP {
          void CreateUser(UserDetails userDetails);
          void showProgressBar();
          void hideProgressBar();
-    }
+
+         void showMessage(String message);
+     }
     interface Presenter{
          void setView(StartActivityMVP.View view);
          void getStartedButtonClick();

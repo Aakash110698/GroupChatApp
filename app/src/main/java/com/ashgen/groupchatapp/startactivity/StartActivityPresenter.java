@@ -43,7 +43,13 @@ public class StartActivityPresenter implements StartActivityMVP.Presenter {
     @Override
     public void getStartedButtonClick() {
         if (view!=null)
+        
         {
+            if(view.getUsername().isEmpty())
+            {
+               view.showMessage("Please fill username");
+               return;
+            }
             view.showProgressBar();
             if (!TextUtils.isEmpty(view.getUsername().trim()))
             {

@@ -113,7 +113,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         assert notificationManager != null;
         try {
-            notificationManager.cancel(0);
+           // notificationManager.cancel(0);
         }
         catch (Exception e)
         {

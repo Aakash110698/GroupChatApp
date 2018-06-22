@@ -26,6 +26,6 @@
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000"
-        android:textSize="12sp" />
+        android:textSize="18sp" />
 
 </RelativeLayout>
